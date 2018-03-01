@@ -1,0 +1,35 @@
+// fish_server.js
+
+var app = require('http').createServer(handler);
+var io = require('socket.io').listen(app);
+var fs = require('fs');
+var bb = require('bonescript');
+const exec = require('child_process').exec;
+
+var htmlPage = '09_02_pwm_fishfeeder_2.html';
+
+app.listen(8085);
+
+function handler (req, res) {
+  fs.readFile(htmlPage,
+    function (err, data) {
+      if (err) {
+        res.writeHead(500);
+        return res.end('Error loading file: ' + htmlPage);
+      }
+      res.writeHead(200);
+      res.end(data);
+    });
+}
+
+function onConnect(socket) {
+    socket.on('exec', handleExec);}
+
+function handleExec(message) {
+        var data = JSON.parse(message);
+        exec(data.command);
+}
+
+io.sockets.on('connection', onConnect);
+
+

@@ -1,0 +1,17 @@
+<html>
+        <head>
+                <script src = "/socket.io/socket.io.js", "time" > </script>
+                <script>
+                        var socket = io.connect();
+                        function feed(){
+                                socket.emit('exec', '{"command":"sh feedertest.sh"}');
+                        }               
+                </script>
+        </head>
+
+        <body>
+                <h1 style="font-size:60pt;">Fishy Hungry???</h1>
+                <input type="button" onclick="feed()" value="Feed da Fishy!"/>
+        </body>
+</html>
+
